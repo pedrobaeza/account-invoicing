@@ -56,7 +56,7 @@ from openerp.tools.translate import _
 class SaleOrderLine(orm.Model):
     _inherit = 'sale.order.line'
 
-    def field_qty_invoiced(self, cr, uid, ids, fields, arg, context):
+    def field_qty_invoiced(self, cr, uid, ids, field_list, arg, context):
         res = dict.fromkeys(ids, 0)
         for line in self.browse(cr, uid, ids, context=context):
             for invoice_line in line.invoice_lines:
@@ -64,7 +64,7 @@ class SaleOrderLine(orm.Model):
                     res[line.id] += invoice_line.quantity  # XXX uom !
         return res
 
-    def field_qty_delivered(self, cr, uid, ids, fields, arg, context):
+    def field_qty_delivered(self, cr, uid, ids, field_list, arg, context):
         res = dict.fromkeys(ids, 0)
         for line in self.browse(cr, uid, ids, context=context):
             if not line.move_ids:
